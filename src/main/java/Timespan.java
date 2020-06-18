@@ -1,6 +1,6 @@
 import org.json.simple.JSONObject;
 
-public class Timespan implements Comparable<Timespan>{
+public class Timespan implements Comparable<Timespan> {
     private int start;
     private int end;
     private int duration;
@@ -24,7 +24,7 @@ public class Timespan implements Comparable<Timespan>{
 
         this.start = start;
         this.end = end;
-
+        this.duration = this.end - this.start;
         int startMins = start % 60;
         int endMins = end % 60;
 
@@ -47,6 +47,20 @@ public class Timespan implements Comparable<Timespan>{
         return new Timespan(Math.min(t1.start, t2.start), Math.max(t1.end, t2.end));
     }
 
+    public String toString() {
+        return String.format("[\"%s\", \"%s\"]", startString, endString);
+    }
+
+    @Override
+    public int compareTo(Timespan o) {
+        if (this.start < o.start) return -1;
+        if (this.start == o.start) {
+            if (this.duration < o.duration) return -1;
+            else if (this.duration == o.duration) return 0;
+        }
+        return 1;
+    }
+
     public int getStart() {
         return start;
     }
@@ -63,17 +77,7 @@ public class Timespan implements Comparable<Timespan>{
         return endString;
     }
 
-    public String toString() {
-        return String.format("[\"%s\", \"%s\"]", startString, endString);
-    }
-
-    @Override
-    public int compareTo(Timespan o) {
-        if (this.start < o.start) return -1;
-        if (this.start == o.start){
-            if (this.duration < o.duration) return -1;
-            else if (this.duration == o.duration) return 0;
-        }
-        return 1;
+    public int getDuration() {
+        return duration;
     }
 }
