@@ -20,6 +20,8 @@ public class Timespan implements Comparable<Timespan>{
     }
 
     Timespan(int start, int end) {
+        if (end < start) end = start;
+
         this.start = start;
         this.end = end;
 
