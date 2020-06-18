@@ -1,6 +1,6 @@
 import org.json.simple.JSONObject;
 
-public class Timespan {
+public class Timespan implements Comparable<Timespan>{
     private int start;
     private int end;
     private int duration;
@@ -38,7 +38,7 @@ public class Timespan {
     }
 
     public static boolean checkOverlap(Timespan t1, Timespan t2) {
-        return (t1.end >= t2.start) || (t2.end >= t1.start);
+        return t1.end >= t2.start;
     }
 
     public static Timespan merge(Timespan t1, Timespan t2) {
@@ -62,6 +62,16 @@ public class Timespan {
     }
 
     public String toString() {
-        return startString + " - " + endString;
+        return String.format("[\"%s\", \"%s\"]", startString, endString);
+    }
+
+    @Override
+    public int compareTo(Timespan o) {
+        if (this.start < o.start) return -1;
+        if (this.start == o.start){
+            if (this.duration < o.duration) return -1;
+            else if (this.duration == o.duration) return 0;
+        }
+        return 1;
     }
 }
