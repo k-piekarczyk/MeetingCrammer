@@ -1,10 +1,11 @@
-import org.json.simple.JSONArray;
+package org.kpiekarczyk;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.kpiekarczyk.Calendar;
 
 import java.io.FileReader;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class Main {

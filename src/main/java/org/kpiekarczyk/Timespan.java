@@ -1,3 +1,5 @@
+package org.kpiekarczyk;
+
 import org.json.simple.JSONObject;
 
 public class Timespan implements Comparable<Timespan> {
