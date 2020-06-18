@@ -1,6 +1,9 @@
+import org.json.simple.JSONObject;
+
 public class Timespan {
     private int start;
     private int end;
+    private int duration;
     private String startString;
     private String endString;
 
@@ -11,6 +14,7 @@ public class Timespan {
 
         this.start = (Integer.parseInt(startSplit[0]) * 60) + Integer.parseInt(startSplit[1]);
         this.end = (Integer.parseInt(endSplit[0]) * 60) + Integer.parseInt(endSplit[1]);
+        this.duration = this.end - this.start;
         this.startString = start;
         this.endString = end;
     }
@@ -29,6 +33,18 @@ public class Timespan {
         this.endString = String.format("%02d:%02d", endHours, endMins);
     }
 
+    Timespan(JSONObject in) {
+        this((String) in.get("start"), (String) in.get("end"));
+    }
+
+    public static boolean checkOverlap(Timespan t1, Timespan t2) {
+        return (t1.end >= t2.start) || (t2.end >= t1.start);
+    }
+
+    public static Timespan merge(Timespan t1, Timespan t2) {
+        return new Timespan(Math.min(t1.start, t2.start), Math.max(t1.end, t2.end));
+    }
+
     public int getStart() {
         return start;
     }
@@ -43,5 +59,9 @@ public class Timespan {
 
     public String getEndString() {
         return endString;
+    }
+
+    public String toString() {
+        return startString + " - " + endString;
     }
 }
